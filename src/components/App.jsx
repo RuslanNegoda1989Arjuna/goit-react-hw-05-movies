@@ -1,14 +1,16 @@
-import { Route, Routes } from 'react-router-dom';
-import fetchTrending from 'tools/Api';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './Home/Home';
 
 export const App = () => {
-  const data = fetchTrending();
-  data.then(data => {
-    console.log(data);
-  });
   return (
     <div>
+      <header>
+        <nav>
+          <NavLink to="/" end>
+            Home
+          </NavLink>
+        </nav>
+      </header>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>

@@ -13,6 +13,6 @@ export default async function fetchTrending() {
 
   const response = await axios(config);
 
-  const data = response.data;
+  const data = response.data.results;
   return data;
 }
