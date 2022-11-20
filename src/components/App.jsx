@@ -1,16 +1,17 @@
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import { HeaderBox, HomeLink } from './App.styled';
 import { Home } from './Home/Home';
 
 export const App = () => {
   return (
     <div>
-      <header>
+      <HeaderBox>
         <nav>
-          <NavLink to="/" end>
+          <HomeLink to="/" end>
             Home
-          </NavLink>
+          </HomeLink>
         </nav>
-      </header>
+      </HeaderBox>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
