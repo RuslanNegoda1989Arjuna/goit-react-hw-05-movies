@@ -34,11 +34,3 @@ export const App = () => {
     </div>
   );
 };
-
-// <HeaderBox>
-//   <nav>
-//     <HomeLink to="/" end>
-//       Home
-//     </HomeLink>
-//   </nav>
-// </HeaderBox>;
