@@ -1,7 +1,7 @@
 // RiHomeHeartFill; RiMovieLine
 import { RiHomeHeartFill, RiMovieLine } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
-import { Header, Nav } from './AppBar.styled';
+// import { Link, NavLink } from 'react-router-dom';
+import { Header, Nav, NavLinks } from './AppBar.styled';
 
 const navItems = [
   { href: '/', text: 'Home', icon: RiHomeHeartFill },
@@ -12,10 +12,11 @@ export const AppBar = () => {
   return (
     <Header>
       <Nav>
-        {navItems.map(({ href, text, icon }) => (
-          <Link to={href} key={href}>
+        {navItems.map(({ href, text, icon: Icon }) => (
+          <NavLinks to={href} key={href}>
+            <Icon size={22} />
             {text}
-          </Link>
+          </NavLinks>
         ))}
       </Nav>
     </Header>
