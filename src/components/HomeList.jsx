@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { FilmName } from './HomeList.styled';
 
 export const HomeList = ({ trendFilms }) => {
   if (!trendFilms) {
@@ -7,12 +8,11 @@ export const HomeList = ({ trendFilms }) => {
   return (
     <div>
       <ul>
-        {trendFilms.map(({ original_name, original_title }) => {
-          console.log('original_name', original_name);
+        {trendFilms.map(({ original_name, original_title, id }) => {
           return (
-            <li key={original_name || original_title}>
+            <li key={original_name || original_title} id={id}>
               <Link to={`${original_name || original_title}`}>
-                <h3>{original_name || original_title}</h3>
+                <FilmName>{original_name || original_title}</FilmName>
               </Link>
             </li>
           );

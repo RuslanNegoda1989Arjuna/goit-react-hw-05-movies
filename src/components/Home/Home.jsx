@@ -9,9 +9,6 @@ export const Home = () => {
   useEffect(() => {
     try {
       const films = fetchTrending();
-      // if (!films) {
-      //   return;
-      // }
 
       films.then(data => {
         return setTrendFilms(data);
@@ -19,10 +16,9 @@ export const Home = () => {
     } catch (error) {}
   }, []);
 
-  console.log('state', trendFilms);
-
   return (
     <main>
+      <h1>Trending Today</h1>
       <HomeList trendFilms={trendFilms} />
     </main>
   );
