@@ -1,6 +1,5 @@
-// RiHomeHeartFill; RiMovieLine
 import { RiHomeHeartFill, RiMovieLine } from 'react-icons/ri';
-// import { Link, NavLink } from 'react-router-dom';
+
 import { Header, Nav, NavLinks } from './AppBar.styled';
 
 const navItems = [
