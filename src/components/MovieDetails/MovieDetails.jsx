@@ -12,7 +12,6 @@ export const MovieDetails = ({ trendFilms }) => {
     original_title,
     overview,
     genre_ids,
-    popularity,
     poster_path,
     vote_average,
     first_air_date,
