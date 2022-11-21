@@ -10,7 +10,7 @@ export const HomeList = ({ trendFilms }) => {
       <ul>
         {trendFilms.map(({ original_name, original_title, id }) => {
           return (
-            <li key={original_name || original_title} id={id}>
+            <li key={id} id={id}>
               <Link to={`/movies/${id}`}>
                 <FilmName>{original_name || original_title}</FilmName>
               </Link>
