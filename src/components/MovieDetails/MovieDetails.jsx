@@ -29,8 +29,6 @@ export const MovieDetails = ({ trendFilms, ganresAll }) => {
   } = filmId;
   const imgUrl = `https://www.themoviedb.org/t/p/w500${poster_path}`;
 
-  console.log('Film', filmId);
-
   // Ф-ція обчислення жанрів
   function genresList(array) {
     let array_genre_names = [];

@@ -19,8 +19,6 @@ export const Cast = () => {
     }
   }, [Id]);
 
-  console.log('CAST ARRAY:', cast);
-
   return (
     <MainActor>
       <ActorCards>
