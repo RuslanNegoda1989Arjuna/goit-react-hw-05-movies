@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCast } from 'tools/Api';
+import { ActorCards, MainActor } from './Cast.styled';
 
-export const Cast = ({ trendFilms }) => {
+export const Cast = () => {
   const { Id } = useParams();
   const [cast, setCast] = useState();
 
@@ -21,9 +22,21 @@ export const Cast = ({ trendFilms }) => {
   console.log('CAST ARRAY:', cast);
 
   return (
-    <main>
-      <h1> Tom Kruz</h1>
-      <p>{Id}</p>
-    </main>
+    <MainActor>
+      <ActorCards>
+        {cast
+          ? cast.map(({ name, character, profile_path, id, original_name }) => {
+              const imgUrl = `https://www.themoviedb.org/t/p/w500${profile_path}`;
+              return (
+                <li key={id}>
+                  <img src={imgUrl} alt="actor" width="100" />
+                  <p>{name || original_name}</p>
+                  <p>Character: {character}</p>
+                </li>
+              );
+            })
+          : 'N/A'}
+      </ActorCards>
+    </MainActor>
   );
 };

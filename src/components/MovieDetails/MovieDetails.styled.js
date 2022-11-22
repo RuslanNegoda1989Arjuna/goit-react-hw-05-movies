@@ -7,3 +7,8 @@ export const FimlContainer = styled.div`
 export const FilmImgDiv = styled.div`
   padding: 10px;
 `;
+
+export const InformationDiv = styled.div`
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+`;

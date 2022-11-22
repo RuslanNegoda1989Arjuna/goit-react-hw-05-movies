@@ -1,5 +1,9 @@
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
-import { FilmImgDiv, FimlContainer } from './MovieDetails.styled';
+import {
+  FilmImgDiv,
+  FimlContainer,
+  InformationDiv,
+} from './MovieDetails.styled';
 import PropTypes from 'prop-types';
 import { BackLink } from 'components/BackLink/BackLink';
 
@@ -60,34 +64,37 @@ export const MovieDetails = ({ trendFilms, ganresAll }) => {
 
   return (
     <>
-      <FimlContainer>
-        <FilmImgDiv>
-          <img src={imgUrl} alt="" title="" width="336" id={id} />
-        </FilmImgDiv>
+      <main>
+        <BackLink to={backLinkHref}>Go Back</BackLink>
+        <FimlContainer>
+          <FilmImgDiv>
+            <img src={imgUrl} alt="" title="" width="336" id={id} />
+          </FilmImgDiv>
 
-        <div>
-          <BackLink to={backLinkHref}>Back to Home</BackLink>
-          <h2>
-            {original_name || original_title} ({years()})
-          </h2>
-          <h4>Rating: {vote_average}</h4>
-          <h3>Overview</h3>
-          <p>{overview}</p>
-          <h3>Genres</h3>
-          <p>{`${genresList(genre_ids) || 'N/A'}`}</p>
-        </div>
-      </FimlContainer>
-      <div>
-        <ul>
-          <li>
-            <Link to="cast">Cast</Link>
-          </li>
-          <li>
-            <Link to="reviews">Reviews</Link>
-          </li>
-        </ul>
+          <div>
+            <h2>
+              {original_name || original_title} ({years()})
+            </h2>
+            <h4>Rating: {vote_average}</h4>
+            <h3>Overview</h3>
+            <p>{overview}</p>
+            <h3>Genres</h3>
+            <p>{`${genresList(genre_ids) || 'N/A'}`}</p>
+          </div>
+        </FimlContainer>
+        <InformationDiv>
+          <h4>Additional information</h4>
+          <ul>
+            <li>
+              <Link to="cast">Cast</Link>
+            </li>
+            <li>
+              <Link to="reviews">Reviews</Link>
+            </li>
+          </ul>
+        </InformationDiv>
         <Outlet />
-      </div>
+      </main>
     </>
   );
 };

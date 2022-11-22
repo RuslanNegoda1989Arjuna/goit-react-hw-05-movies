@@ -45,7 +45,7 @@ export const App = () => {
               <MovieDetails trendFilms={trendFilms} ganresAll={ganresAll} />
             }
           >
-            <Route path="cast" element={<Cast trendFilms={trendFilms} />} />
+            <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
         </Route>
