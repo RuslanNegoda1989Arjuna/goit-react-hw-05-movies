@@ -8,8 +8,10 @@ export const MovieDetails = ({ trendFilms, ganresAll }) => {
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
 
+  // Пошук фільма за айдішніком
+
   const filmId = trendFilms.find(film => Number(film.id) === Number(Id));
-  // console.log(filmId);
+
   const {
     id,
     original_name,
@@ -23,25 +25,27 @@ export const MovieDetails = ({ trendFilms, ganresAll }) => {
   } = filmId;
   const imgUrl = `https://www.themoviedb.org/t/p/w500${poster_path}`;
 
+  console.log('Film', filmId);
+
   // Ф-ція обчислення жанрів
   function genresList(array) {
     let array_genre_names = [];
     let genre_namess = '';
 
-    if (!ganresAll) {
-      return;
-    }
     for (const id of array) {
       const arrayIdGenres = ganresAll.find(
         genre => Number(genre.id) === Number(id)
       );
 
-      array_genre_names.push(arrayIdGenres.name || 'n/a');
+      arrayIdGenres
+        ? array_genre_names.push(arrayIdGenres.name)
+        : array_genre_names.push('n/a');
 
       genre_namess = array_genre_names.join(', ');
     }
     return genre_namess;
   }
+
   // Ф-ція обрізання дати
   function years() {
     if (release_date) {
