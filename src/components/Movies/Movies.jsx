@@ -14,7 +14,7 @@ export const Movies = () => {
   };
 
   const searchSubmit = (values, { resetForm }) => {
-    console.log(values);
+    console.log(values.value);
     // onSubmit(values);
     resetForm();
   };
@@ -34,7 +34,7 @@ export const Movies = () => {
               name="value"
               autoComplete="off"
               autoFocus
-              placeholder="Search images and photos"
+              placeholder="Search films"
             />
           </FormSearch>
         </Header>
