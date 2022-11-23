@@ -3,6 +3,7 @@ const API_KEY = '0deed939492f10fa02b7b267dbfb9d49';
 const BASE_URL = 'https://api.themoviedb.org/3/trending/all/day';
 const URL_GENRES = 'https://api.themoviedb.org/3/genre/movie/list?';
 const URL_CAST = 'https://api.themoviedb.org/3/movie/';
+const URL = 'https://api.themoviedb.org/3/';
 
 // Фетч трендових фільмів
 export default async function fetchTrending() {
@@ -45,5 +46,27 @@ export async function fetchReviews(Id) {
   const response = await axios(url);
 
   const data = response.data.results;
+  return data;
+}
+
+// Пошук фільмів
+
+export async function fetchSearchFilm(quary) {
+  const url = `${URL}search/movie?api_key=${API_KEY}&language=en-US&query=${quary}&page=1&include_adult=false`;
+
+  const response = await axios(url);
+
+  const data = response.data.results;
+  return data;
+}
+
+// Пошук по айді інформації про фільм
+
+export async function ApiMovieInfo(Id) {
+  const url = `${URL}movie/${Id}?api_key=${API_KEY}&language=en-US`;
+
+  const response = await axios(url);
+
+  const data = response.data;
   return data;
 }

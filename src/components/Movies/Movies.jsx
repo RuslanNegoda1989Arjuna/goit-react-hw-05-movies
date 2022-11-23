@@ -1,48 +1,41 @@
-import PropTypes from 'prop-types';
-import { Formik } from 'formik';
-import { FiSearch } from 'react-icons/fi';
-import { ButtonSubmit, FormSearch, Header, Input } from './Movies.styled';
-import { Outlet } from 'react-router-dom';
+import { HomeList } from 'components/HomeList';
+import { SearchBox } from 'components/SearchBox/SearchBox';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { fetchSearchFilm } from 'tools/Api';
 
 export const Movies = () => {
-  console.log('Search will be here');
+  const [searchFilm, setSearchFilm] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const quary = searchParams.get('quary');
 
-  // const modalRoot = document.querySelector('modal-root');
+  console.log(quary);
 
-  const initialValues = {
-    value: '',
+  useEffect(() => {
+    if (!quary) return;
+    try {
+      const searchFilms = fetchSearchFilm(quary);
+
+      searchFilms.then(data => {
+        return setSearchFilm(data);
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  }, [quary]);
+
+  // console.log('searchFilm', searchFilm);
+
+  const onSubmit = values => {
+    setSearchParams({ quary: values.value });
   };
 
-  const searchSubmit = (values, { resetForm }) => {
-    console.log(values.value);
-    // onSubmit(values);
-    resetForm();
-  };
+  console.log('Params:', quary);
+
   return (
-    <>
-      <Formik initialValues={initialValues} onSubmit={searchSubmit}>
-        <Header>
-          <FormSearch>
-            <ButtonSubmit type="submit">
-              <span>
-                <FiSearch size={20} />
-              </span>
-            </ButtonSubmit>
-
-            <Input
-              type="text"
-              name="value"
-              autoComplete="off"
-              autoFocus
-              placeholder="Search films"
-            />
-          </FormSearch>
-        </Header>
-      </Formik>
-      <Outlet />
-    </>
+    <div>
+      <SearchBox onSubmit={onSubmit} />
+      {searchFilm && <HomeList trendFilms={searchFilm} />}
+    </div>
   );
-};
-Movies.propTypes = {
-  onSubmit: PropTypes.func,
 };

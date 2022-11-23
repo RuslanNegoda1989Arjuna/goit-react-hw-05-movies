@@ -6,47 +6,46 @@ import {
 } from './MovieDetails.styled';
 import PropTypes from 'prop-types';
 import { BackLink } from 'components/BackLink/BackLink';
+import { useEffect, useState } from 'react';
+import { ApiMovieInfo } from 'tools/Api';
 
-export const MovieDetails = ({ trendFilms, ganresAll }) => {
+export const MovieDetails = () => {
+  const [detailFilms, setDetailFilms] = useState();
   const { Id } = useParams();
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
 
   // Пошук фільма за айдішніком
+  useEffect(() => {
+    try {
+      const details = ApiMovieInfo(Id);
 
-  const filmId = trendFilms.find(film => Number(film.id) === Number(Id));
+      details.then(data => {
+        return setDetailFilms(data);
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  }, [Id]);
+
+  // console.log('detailFilms', detailFilms);
+
+  if (!detailFilms) {
+    return null;
+  }
 
   const {
     id,
     original_name,
     original_title,
     overview,
-    genre_ids,
+    genres,
     poster_path,
     vote_average,
     first_air_date,
     release_date,
-  } = filmId;
+  } = detailFilms;
   const imgUrl = `https://www.themoviedb.org/t/p/w500${poster_path}`;
-
-  // Ф-ція обчислення жанрів
-  function genresList(array) {
-    let array_genre_names = [];
-    let genre_namess = '';
-
-    for (const id of array) {
-      const arrayIdGenres = ganresAll.find(
-        genre => Number(genre.id) === Number(id)
-      );
-
-      arrayIdGenres
-        ? array_genre_names.push(arrayIdGenres.name)
-        : array_genre_names.push('n/a');
-
-      genre_namess = array_genre_names.join(', ');
-    }
-    return genre_namess;
-  }
 
   // Ф-ція обрізання дати
   function years() {
@@ -77,14 +76,18 @@ export const MovieDetails = ({ trendFilms, ganresAll }) => {
             <h3>Overview</h3>
             <p>{overview}</p>
             <h3>Genres</h3>
-            <p>{`${genresList(genre_ids) || 'N/A'}`}</p>
+            <p>
+              {genres ? genres.map(e => e.name).join(', ') : 'not information'}
+            </p>
           </div>
         </FimlContainer>
         <InformationDiv>
           <h4>Additional information</h4>
           <ul>
             <li>
-              <Link to="cast">Cast</Link>
+              <Link to="cast" state={{ from: location }}>
+                Cast
+              </Link>
             </li>
             <li>
               <Link to="reviews">Reviews</Link>
