@@ -9,8 +9,6 @@ export const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const quary = searchParams.get('quary');
 
-  console.log(quary);
-
   useEffect(() => {
     if (!quary) return;
     try {
@@ -24,13 +22,9 @@ export const Movies = () => {
     }
   }, [quary]);
 
-  // console.log('searchFilm', searchFilm);
-
   const onSubmit = values => {
     setSearchParams({ quary: values.value });
   };
-
-  console.log('Params:', quary);
 
   return (
     <div>
