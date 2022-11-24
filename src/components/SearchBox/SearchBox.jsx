@@ -9,7 +9,6 @@ export const SearchBox = ({ onSubmit }) => {
   };
 
   const searchSubmit = (values, { resetForm }) => {
-    // console.log(values.value);
     onSubmit(values);
     resetForm();
   };
