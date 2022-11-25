@@ -36,8 +36,6 @@ export const MovieDetails = () => {
       toast.error({ error });
     }
   }, [Id]);
-  // console.warn('error movie details', errors);
-  // console.log('detailFilms', detailFilms);
 
   if (!detailFilms) {
     return null;

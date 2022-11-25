@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy } from 'react';
 import fetchTrending from 'tools/Api';
 
 import { Layout } from './Layout/Layout';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { lazy } from 'react';
+// import { lazy } from 'react';
 
 const Home = lazy(() =>
   import('./Home/Home').then(module => ({ ...module, default: module.Home }))
