@@ -19,15 +19,22 @@ export const Cast = () => {
     }
   }, [Id]);
 
+  function setProfile(profile_path) {
+    if (profile_path === null || profile_path === undefined) {
+      return 'https://i.pinimg.com/originals/74/3d/b2/743db230d891b47c1d8c66b161111b91.jpg';
+    }
+
+    return `https://www.themoviedb.org/t/p/w500${profile_path}`;
+  }
+
   return (
     <MainActor>
       <ActorCards>
         {cast
           ? cast.map(({ name, character, profile_path, id, original_name }) => {
-              const imgUrl = `https://www.themoviedb.org/t/p/w500${profile_path}`;
               return (
                 <li key={id}>
-                  <img src={imgUrl} alt="actor" width="100" />
+                  <img src={setProfile(profile_path)} alt="actor" width="100" />
                   <p>{name || original_name}</p>
                   <p>Character: {character}</p>
                 </li>

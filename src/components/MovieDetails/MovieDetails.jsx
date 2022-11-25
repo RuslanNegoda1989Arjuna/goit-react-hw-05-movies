@@ -6,11 +6,14 @@ import {
 } from './MovieDetails.styled';
 import PropTypes from 'prop-types';
 import { BackLink } from 'components/BackLink/BackLink';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { ApiMovieInfo } from 'tools/Api';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const MovieDetails = () => {
   const [detailFilms, setDetailFilms] = useState();
+  const [errors, setErrors] = useState(null);
   const { Id } = useParams();
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
@@ -21,13 +24,19 @@ export const MovieDetails = () => {
       const details = ApiMovieInfo(Id);
 
       details.then(data => {
+        if (data.length === 0) {
+          toast.error('Nothing is found !', {
+            position: toast.POSITION.TOP_LEFT,
+          });
+        }
         return setDetailFilms(data);
       });
     } catch (error) {
-      console.warn(error);
+      setErrors({ error });
+      toast.error({ error });
     }
   }, [Id]);
-
+  // console.warn('error movie details', errors);
   // console.log('detailFilms', detailFilms);
 
   if (!detailFilms) {
@@ -45,7 +54,14 @@ export const MovieDetails = () => {
     first_air_date,
     release_date,
   } = detailFilms;
-  const imgUrl = `https://www.themoviedb.org/t/p/w500${poster_path}`;
+
+  function setPosters(poster_path) {
+    if (poster_path === null || poster_path === undefined) {
+      return 'https://i.pinimg.com/originals/74/3d/b2/743db230d891b47c1d8c66b161111b91.jpg';
+    }
+
+    return `https://www.themoviedb.org/t/p/w500${poster_path}`;
+  }
 
   // Ф-ція обрізання дати
   function years() {
@@ -62,10 +78,17 @@ export const MovieDetails = () => {
   return (
     <>
       <main>
+        {errors && <p>Whoops, something went wrong: {errors}</p>}
         <BackLink to={backLinkHref}>Go Back</BackLink>
         <FimlContainer>
           <FilmImgDiv>
-            <img src={imgUrl} alt="" title="" width="336" id={id} />
+            <img
+              src={setPosters(poster_path)}
+              alt=""
+              title=""
+              width="336"
+              id={id}
+            />
           </FilmImgDiv>
 
           <div>
@@ -94,7 +117,10 @@ export const MovieDetails = () => {
             </li>
           </ul>
         </InformationDiv>
-        <Outlet />
+        <ToastContainer autoClose={2500} position="top-left" theme="colored" />
+        <Suspense fallback={<div>Loading page...</div>}>
+          <Outlet />
+        </Suspense>
       </main>
     </>
   );

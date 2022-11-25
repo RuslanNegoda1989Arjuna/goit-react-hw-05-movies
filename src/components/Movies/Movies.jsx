@@ -2,6 +2,8 @@ import { HomeList } from 'components/HomeList';
 import { SearchBox } from 'components/SearchBox/SearchBox';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { fetchSearchFilm } from 'tools/Api';
 
 export const Movies = () => {
@@ -15,14 +17,27 @@ export const Movies = () => {
       const searchFilms = fetchSearchFilm(quary);
 
       searchFilms.then(data => {
+        if (data.length === 0) {
+          toast.error('Nothing is found !', {
+            position: toast.POSITION.TOP_LEFT,
+          });
+        }
+
         return setSearchFilm(data);
       });
-    } catch (error) {
-      console.warn(error);
+    } catch (message) {
+      console.warn('message ERROR movie', message);
+      toast.error(message);
     }
   }, [quary]);
 
   const onSubmit = values => {
+    if (values.value.trim() === '') {
+      return toast.warn('Enter a word for search');
+    } else if (values.value === quary) {
+      return;
+    }
+
     setSearchParams({ quary: values.value });
   };
 
