@@ -1,6 +1,3 @@
-**Read in other languages: [Русский](README.md), [Polska](README.pl.md),
-[English](README.en.md), [Spanish](README.es.md).**
-
 # React homework template
 
 ![Demonstration](https://github.com/RuslanNegoda1989Arjuna/goit-react-hw-05-movies/blob/main/src/images/MOvie%20react.png)
