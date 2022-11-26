@@ -1,24 +1,25 @@
 import { Route, Routes } from 'react-router-dom';
-import { useState, useEffect, lazy } from 'react';
-import fetchTrending from 'tools/Api';
-
+import { lazy } from 'react';
 import { Layout } from './Layout/Layout';
-
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { lazy } from 'react';
+
+// Розбиваэмо на меншы фрагменти, для меншого навантаження на мережу
 
 const Home = lazy(() =>
-  import('./Home/Home').then(module => ({ ...module, default: module.Home }))
+  import('../pages/Home/Home').then(module => ({
+    ...module,
+    default: module.Home,
+  }))
 );
 const Movies = lazy(() =>
-  import('./Movies/Movies').then(module => ({
+  import('../pages/Movies/Movies').then(module => ({
     ...module,
     default: module.Movies,
   }))
 );
 const MovieDetails = lazy(() =>
-  import('./MovieDetails/MovieDetails').then(module => ({
+  import('../pages/MovieDetails/MovieDetails').then(module => ({
     ...module,
     default: module.MovieDetails,
   }))
@@ -34,35 +35,17 @@ const Reviews = lazy(() =>
 );
 
 export const App = () => {
-  const [trendFilms, setTrendFilms] = useState();
-  const [errors, setErrors] = useState(null);
-
-  //  Фетч по трендовим фільмам
-  useEffect(() => {
-    try {
-      const films = fetchTrending();
-
-      films.then(data => {
-        return setTrendFilms(data);
-      });
-    } catch (error) {
-      setErrors({ error });
-      toast.error({ error });
-    }
-  }, []);
-
   return (
     <div>
-      {errors && <p>Whoops, something went wrong: {errors}</p>}
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home trendFilms={trendFilms} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/movies/" element={<Movies />} />
           <Route path="/movies/:Id" element={<MovieDetails />}>
             <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
-          <Route path="*" element={<Home trendFilms={trendFilms} />} />
+          <Route path="*" element={<Home />} />
         </Route>
       </Routes>
       <ToastContainer autoClose={2500} position="top-left" theme="colored" />

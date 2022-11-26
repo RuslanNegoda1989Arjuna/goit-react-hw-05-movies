@@ -4,7 +4,6 @@ import {
   FimlContainer,
   InformationDiv,
 } from './MovieDetails.styled';
-import PropTypes from 'prop-types';
 import { BackLink } from 'components/BackLink/BackLink';
 import { Suspense, useEffect, useState } from 'react';
 import { ApiMovieInfo } from 'tools/Api';
@@ -13,10 +12,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const MovieDetails = () => {
   const [detailFilms, setDetailFilms] = useState();
-  const [errors, setErrors] = useState(null);
   const { Id } = useParams();
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
+  const backLinkHref = location.state?.from ?? '/movies';
 
   // Пошук фільма за айдішніком
   useEffect(() => {
@@ -32,7 +30,6 @@ export const MovieDetails = () => {
         return setDetailFilms(data);
       });
     } catch (error) {
-      setErrors({ error });
       toast.error({ error });
     }
   }, [Id]);
@@ -76,14 +73,13 @@ export const MovieDetails = () => {
   return (
     <>
       <main>
-        {errors && <p>Whoops, something went wrong: {errors}</p>}
         <BackLink to={backLinkHref}>Go Back</BackLink>
         <FimlContainer>
           <FilmImgDiv>
             <img
               src={setPosters(poster_path)}
-              alt=""
-              title=""
+              alt="Poster film"
+              title={original_name || original_title}
               width="336"
               id={id}
             />
@@ -93,7 +89,7 @@ export const MovieDetails = () => {
             <h2>
               {original_name || original_title} ({years()})
             </h2>
-            <h4>Rating: {vote_average}</h4>
+            <h4>Rating: {vote_average.toFixed()}</h4>
             <h3>Overview</h3>
             <p>{overview}</p>
             <h3>Genres</h3>
@@ -106,12 +102,12 @@ export const MovieDetails = () => {
           <h4>Additional information</h4>
           <ul>
             <li>
-              <Link to="cast" state={{ from: location }}>
+              <Link to="cast" state={location.state}>
                 Cast
               </Link>
             </li>
             <li>
-              <Link to="reviews" state={{ from: location }}>
+              <Link to="reviews" state={location.state}>
                 Reviews
               </Link>
             </li>
@@ -124,9 +120,4 @@ export const MovieDetails = () => {
       </main>
     </>
   );
-};
-
-MovieDetails.propTypes = {
-  trendFilms: PropTypes.array,
-  ganresAll: PropTypes.array,
 };

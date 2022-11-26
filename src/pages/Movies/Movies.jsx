@@ -1,4 +1,4 @@
-import { HomeList } from 'components/HomeList';
+import { HomeList } from 'components/MovieList/MovieList';
 import { SearchBox } from 'components/SearchBox/SearchBox';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -18,7 +18,7 @@ export const Movies = () => {
 
       searchFilms.then(data => {
         if (data.length === 0) {
-          toast.error('Nothing is found !', {
+          toast.error(`Nothing is found with this film name: ${quary}!`, {
             position: toast.POSITION.TOP_LEFT,
           });
         }
